@@ -1,5 +1,5 @@
 import { Component } from "react";
-import "../css_tyles/search-css-styles.css";
+import "../css_tyles/search/search-styles.css";
 
 class SearchBox extends Component {
   render() {

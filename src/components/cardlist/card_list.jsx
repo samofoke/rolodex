@@ -1,4 +1,5 @@
 import { Component } from "react";
+import "../css_tyles/card/card-list.css";
 
 class CardList extends Component {
   render() {
@@ -6,16 +7,19 @@ class CardList extends Component {
 
     return (
       <div className="card-list">
-        {monsters.map((m) => (
-          <div className="card-container" key={m.id}>
-            <img
-              alt={`monster ${m.name}`}
-              src={`https://robohash.org/${m.id}?set=set2&size=180x180`}
-            />
-            <h2>{m.name}</h2>
-            <p>{m.email}</p>
-          </div>
-        ))}
+        {monsters.map((m) => {
+          const { name, email, id } = m;
+          return (
+            <div className="card-container" key={id}>
+              <img
+                alt={`monster ${name}`}
+                src={`https://robohash.org/${id}?set=set2&size=180x180`}
+              />
+              <h2>{name}</h2>
+              <p>{email}</p>
+            </div>
+          );
+        })}
       </div>
     );
   }
