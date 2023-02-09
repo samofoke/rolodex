@@ -1,5 +1,6 @@
 import { Component } from "react";
 import "../css_tyles/card/card-list.css";
+import "../css_tyles/card/card-list-container.css";
 
 class CardList extends Component {
   render() {
