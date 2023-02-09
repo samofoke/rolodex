@@ -1,6 +1,6 @@
 import { Component } from "react";
+import Card from "../monster-card/card";
 import "../css_tyles/card/card-list.css";
-import "../css_tyles/card/card-list-container.css";
 
 class CardList extends Component {
   render() {
@@ -9,17 +9,7 @@ class CardList extends Component {
     return (
       <div className="card-list">
         {monsters.map((m) => {
-          const { name, email, id } = m;
-          return (
-            <div className="card-container" key={id}>
-              <img
-                alt={`monster ${name}`}
-                src={`https://robohash.org/${id}?set=set2&size=180x180`}
-              />
-              <h2>{name}</h2>
-              <p>{email}</p>
-            </div>
-          );
+          return <Card key={m.id} m={m} />;
         })}
       </div>
     );
