@@ -1,9 +1,50 @@
-import { Component } from 'react';
+import { useState, useEffect } from 'react';
 import CardList from './components/cardlist/card_list';
 import SearchBox from './components/searchbox/search_box';
-import logo from './logo.svg';
 import './App.css';
 
+/*
+We going to add functional components vs class component
+*/
+
+
+const App = () => {
+
+  const [searchMonstersFields, setSearchMonstersFields] = useState('');
+  const [monsters, setMonsters] = useState([]);
+
+  console.log(searchMonstersFields);
+
+  const onSearchChange = (event) => {
+    const searcFields = event.target.value.toLocaleLowerCase();
+    setSearchMonstersFields(searcFields);
+  };
+
+  const filterMonsters = monsters.filter((monster) => {
+    return monster.name.toLocaleLowerCase().includes(searchMonstersFields);
+  });
+
+  useEffect(() => {
+    console.log("run useEffect");
+    fetch("https://jsonplaceholder.typicode.com/users")
+    .then((res) => res.json())
+    .then((users) => setMonsters(users));
+  }, [])
+
+
+  return(
+    <div className="App">
+      <h1 className="app-title">Collection of Monsters</h1>
+      <SearchBox
+        className="search-box"
+        onChangeHandler={onSearchChange}
+        placeholder="Search"
+      />
+      <CardList monsters={filterMonsters} />
+    </div>
+  );
+}
+/*
 class App extends Component {
 
   constructor() {
@@ -59,5 +100,5 @@ class App extends Component {
     );
   }
 }
-
+*/
 export default App;
