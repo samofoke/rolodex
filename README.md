@@ -8,3 +8,6 @@
   npm start to run the project on a default port.
   if you want to deploy it you run npm run delpoy
   ```
+- The Common lifecycle for React.
+  <img src="./React lifecycle.drawio.svg">
+- This is an example of class components shows how everything flows.

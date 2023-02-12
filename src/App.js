@@ -1,63 +1,54 @@
-import { Component } from 'react';
+import { useState, useEffect } from 'react';
 import CardList from './components/cardlist/card_list';
 import SearchBox from './components/searchbox/search_box';
-import logo from './logo.svg';
 import './App.css';
 
-class App extends Component {
+/*
+We going to add functional components vs class component
+*/
 
-  constructor() {
-    super();
 
-    this.state = {
-      monsters: [],
-      searchMonstersFields: '',
-    };
-  }
+const App = () => {
 
-  componentDidMount() {
+  const [searchMonstersFields, setSearchMonstersFields] = useState('');
+  const [monsters, setMonsters] = useState([]);
+  const [filteredMonster, setFilteredMonster] = useState(monsters);
 
-    fetch("https://jsonplaceholder.typicode.com/users")
-      .then((res) => res.json())
-      .then((users) => 
-        this.setState(
-          () => {
-            return {monsters: users};
-          }
-        )
-      );
-  }
 
-  onSearchChange = (event) => {
-
-    const searchMonstersFields = event.target.value.toLocaleLowerCase();
-    this.setState(() => {
-      return { searchMonstersFields };
-    });
+  const onSearchChange = (event) => {
+    const searcFields = event.target.value.toLocaleLowerCase();
+    setSearchMonstersFields(searcFields);
   };
 
-  render() {
+  useEffect(() => {
+    console.log("run useEffect");
+    fetch("https://jsonplaceholder.typicode.com/users")
+    .then((res) => res.json())
+    .then((users) => setMonsters(users));
+  }, [])
 
-    const { monsters, searchMonstersFields } = this.state;
-    const { onSearchChange} = this;
+/* This useEffect renders if the is a state change on the search field or the
+ * array of filtered monsters.
+*/
+  useEffect(() => {
+      const newFilteredMonsters = monsters.filter((monster) => {
+          return monster.name.toLocaleLowerCase().includes(searchMonstersFields);
+      });
+      setFilteredMonster(newFilteredMonsters);
+  }, [monsters, searchMonstersFields])
 
-    const filterMonsters = monsters.filter((monster) => {
-      return monster.name.toLocaleLowerCase().includes(searchMonstersFields);
-    });
 
-    return (
-      <div className="App">
-        <h1 className="app-title">Collection of Monsters</h1>
-        <SearchBox
-          className="search-box"
-          onChangeHandler={onSearchChange}
-          placeholder="Search"
-        />
-        <CardList monsters={filterMonsters} />
-      </div>
-      
-    );
-  }
+  return(
+    <div className="App">
+      <h1 className="app-title">Collection of Monsters</h1>
+      <SearchBox
+        className="search-box"
+        onChangeHandler={onSearchChange}
+        placeholder="Search"
+      />
+      <CardList monsters={filteredMonster} />
+    </div>
+  );
 }
 
 export default App;
