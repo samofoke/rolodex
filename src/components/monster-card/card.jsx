@@ -1,10 +1,7 @@
-import { Component } from "react";
 import "../css_tyles/card/card-list-container.css";
 
-class Card extends Component {
-  render() {
-    const { name, email, id } = this.props.m;
-
+const Card = ({m}) => {
+    const { name, email, id } = m;
     return (
       <div className="card-container">
         <img
@@ -15,7 +12,6 @@ class Card extends Component {
         <p>{email}</p>
       </div>
     );
-  }
 }
 
 export default Card;
