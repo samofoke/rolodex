@@ -21,7 +21,6 @@ const App = () => {
   };
 
   useEffect(() => {
-    console.log("run useEffect");
     fetch("https://jsonplaceholder.typicode.com/users")
     .then((res) => res.json())
     .then((users) => setMonsters(users));
